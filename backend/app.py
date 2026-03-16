@@ -4,15 +4,12 @@ from fpdf import FPDF
 import os
 import uuid
 
-# -------------------- Configuración Flask --------------------
 app = Flask(__name__)
 CORS(app)
 
-# -------------------- Rutas base --------------------
 BASE_DIR = os.path.dirname(__file__)
 FONT_DIR = BASE_DIR
 
-# -------------------- Rutas de prueba --------------------
 @app.route("/", methods=["GET"])
 def index():
     return "PV Wertgutachten Backend läuft!"
@@ -21,7 +18,6 @@ def index():
 def test():
     return jsonify({"status": "ok", "message": "Backend läuft"})
 
-# -------------------- Endpoints de cálculo --------------------
 @app.route("/buchwert", methods=["POST"])
 def buchwert():
     data = request.json
@@ -41,11 +37,15 @@ def ertragswert():
     se = float(data["spezifischer_ertrag"])
     v = float(data["einspeiseverguetung"])
     rl = float(data["restlaufzeit"])
+    
+    betriebsmodell = data.get('betriebsmodell', 'volleinspeisung')
+    
     jahresertrag = kwp * se * v / 100
     ertragswert = jahresertrag * rl
     return jsonify({
         "jahresertrag": round(jahresertrag, 2),
-        "ertragswert": round(ertragswert, 2)
+        "ertragswert": round(ertragswert, 2),
+        "betriebsmodell": betriebsmodell  # ✅ RECIBE DEL FRONTEND
     })
 
 @app.route("/restwert", methods=["POST"])
@@ -61,7 +61,6 @@ def restwert():
         "restwert": round(restwert, 2)
     })
 
-# -------------------- Endpoint PDF (CORREGIDO PARA RENDER) --------------------
 @app.route("/pdf", methods=["POST"])
 def generate_pdf():
     try:
@@ -115,10 +114,10 @@ def generate_pdf():
         print("PDF ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
 
-
-# -------------------- Ejecutar Flask --------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
+
+
 
 
 
