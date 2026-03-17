@@ -52,7 +52,7 @@ function BetriebsmodellSelector({ onModelChange }) {
         </select>
       </div>
 
-      <div className="alert alert-light mt-3">
+      <div className="alert alert-success mt-3">
         {model === "volleinspeisung" && (
           <p>
             Die gesamte erzeugte Energie wird ins Netz eingespeist und gemäß EEG vergütet.
