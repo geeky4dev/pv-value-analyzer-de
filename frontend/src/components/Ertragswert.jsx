@@ -64,7 +64,7 @@ function Ertragswert({ onResult, betriebsmodell }) {
 
   const calculateErtragswert = async () => {
     const k = parseFloat(kwp);
-    const se = parseFloat(spezErtrag);
+    const production = pvgisProduction || (k * se);
     const v = parseFloat(verguetung);
     const rl = parseFloat(restlaufzeit);
 

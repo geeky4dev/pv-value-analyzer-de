@@ -52,8 +52,39 @@ function ReportForm({ buchwertData, ertragswertData, restwertData }) {
           Die PDF-Report-Funktion wird in der Vollversion verfügbar sein.
         </p>
       </div>
+
+      {/* ✅ FOOTER SIN LÍNEA DE SEPARACIÓN */}
+      <footer style={{ 
+        marginTop: '40px', 
+        padding: '20px 0', 
+        textAlign: 'center',
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        gap: '10px',
+        flexWrap: 'wrap'
+      }}>
+        <img 
+          src="/logo.png"  // ← Prueba primero esta ruta
+          // src="/frontend/logo.png"  // ← Usa esta si no funciona
+          alt="Apps4Green" 
+          style={{ 
+            height: '30px', 
+            width: 'auto' 
+          }} 
+        />
+        <span style={{ 
+          fontSize: '14px', 
+          color: '#6c757d',
+          fontWeight: '500'
+        }}>
+          © 2026 Apps4Green
+        </span>
+      </footer>
     </>
   );
 }
 
 export default ReportForm;
+
+

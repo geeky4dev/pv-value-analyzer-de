@@ -3,6 +3,7 @@ from flask_cors import CORS
 from fpdf import FPDF
 import os
 import uuid
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -113,6 +114,39 @@ def generate_pdf():
     except Exception as e:
         print("PDF ERROR:", str(e))
         return jsonify({"error": str(e)}), 500
+
+        @app.route("/pvgis", methods=["POST"])
+def pvgis():
+    try:
+        data = request.json
+
+        lat = float(data["lat"])
+        lon = float(data["lon"])
+        kwp = float(data["kwp"])
+
+        # URL PVGIS
+        url = (
+            f"https://re.jrc.ec.europa.eu/api/v5_2/PVcalc"
+            f"?lat={lat}&lon={lon}"
+            f"&peakpower={kwp}"
+            f"&loss=14"
+            f"&outputformat=json"
+        )
+
+        response = requests.get(url, timeout=10)
+        result = response.json()
+
+        annual_production = result["outputs"]["totals"]["fixed"]["E_y"]
+
+        return jsonify({
+            "annual_production": round(annual_production, 2)
+        })
+
+    except Exception as e:
+        return jsonify({
+            "error": "PVGIS request failed",
+            "details": str(e)
+        }), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)

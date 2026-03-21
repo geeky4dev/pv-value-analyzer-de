@@ -8,6 +8,7 @@ import Ertragswert from "./components/Ertragswert";
 import Restwert from "./components/Restwert";
 import ReportForm from "./components/ReportForm";
 import BetriebsmodellSelector from "./components/BetriebsmodellSelector";
+import PVGISForm from "./components/PVGISForm";
 
 // Backend URL desde variables de entorno
 const BASE_URL = import.meta.env.VITE_BACKEND_URL;
@@ -37,6 +38,11 @@ function App() {
     restwert: ""
   });
 
+  // -------------------------
+  // PVGIS - Integration
+  // -------------------------
+  const [pvgisProduction, setPvgisProduction] = useState(null);
+
   return (
     <div className="container mt-4">
 
@@ -47,6 +53,11 @@ function App() {
       {/* Selección del modelo de operación */}
       <BetriebsmodellSelector onModelChange={setBetriebsmodell} />
 
+      {/* NUEVO: PVGIS */}
+      <PVGISForm 
+      BASE_URL={BASE_URL}
+      onResult={setPvgisProduction} />
+
       {/* Componentes de cálculo */}
       <Buchwert
         BASE_URL={BASE_URL}
@@ -55,8 +66,8 @@ function App() {
 
       <Ertragswert
         BASE_URL={BASE_URL}
-        betriebsmodell={betriebsmodell}
-        onResult={(data) => setErtragswertData(data)}
+        pvgisProduction={pvgisProduction}
+        onResult={setErtragswertData}
       />
 
       <Restwert
