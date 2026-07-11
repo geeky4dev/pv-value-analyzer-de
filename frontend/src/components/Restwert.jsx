@@ -120,7 +120,7 @@ function Restwert({ ertragswert, performanceRatio, onResult, restlaufzeit, zusta
   return (
     <div className="card mb-4 p-3">
       <h4 className="text-primary fw-bold">
-        7. Restwert berechnen <span className="badge bg-info">PRO</span>
+        7. Restwert berechnen 
       </h4>
 
       <div className="mb-3">

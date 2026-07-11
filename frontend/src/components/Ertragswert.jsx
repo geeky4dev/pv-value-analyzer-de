@@ -194,7 +194,7 @@ function Ertragswert({ onResult, betriebsmodell, pvgisProduction, anlagengroesse
 
   return (
     <div className="card mb-4 p-3">
-      <h4 className="text-primary fw-bold">4. Ertragswert berechnen <span className="badge bg-info">PRO</span></h4>
+      <h4 className="text-primary fw-bold">4. Ertragswert berechnen </h4>
       
       <div className="row">
         <div className="col-md-6 mb-2">

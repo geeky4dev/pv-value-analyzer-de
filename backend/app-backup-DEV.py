@@ -20,7 +20,17 @@ import gc
 
 # -------------------- APP --------------------
 app = Flask(__name__)
-CORS(app)
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024
+CORS(
+    app,
+    resources={
+        r"/*": {
+            "origins": [
+                "https://pv-value-analyzer-de-frontend.onrender.com"
+            ]
+        }
+    }
+)
 
 TEMP_DIR = tempfile.gettempdir()
 
@@ -60,7 +70,7 @@ def index():
 @app.route("/ertragswert", methods=["POST"])
 def ertragswert():
     try:
-        data = request.get_json()
+        data = request.get_json() or {}
 
         k = float(data.get("anlagengroesse", 0))
         se = float(data.get("spezifischer_ertrag", 0))
@@ -129,8 +139,16 @@ def pvgis():
             "outputformat": "json"
         }
 
-        response = requests.get(url, params=params)
+        response = requests.get(
+            url,
+            params=params,
+            timeout=20
+        )
+
+        response.raise_for_status()
+
         data = response.json()
+
         annual = data["outputs"]["totals"]["fixed"]["E_y"]
         specific = annual / kwp
 
@@ -347,7 +365,7 @@ def pdf():
                 pdf.image(logo_path, x=pdf.l_margin, y=40, w=25)
                 logo_height = 35 * 0.8
             except Exception as e:
-                print("Error al cargar el logo:", e)
+                #print("Error al cargar el logo:", e)
         else:
             logo_path = None
 
@@ -446,7 +464,7 @@ def pdf():
                     f.write(sig_data)
                 pdf.image(signature_path, x=pdf.l_margin, y=sig_y, h=25)
             except Exception as e:
-                print("Deckblatt signature error:", e)
+                #print("Deckblatt signature error:", e)
 
         pdf.set_xy(pdf.l_margin, sig_y + 25)
         pdf.set_font("DejaVu", "B", 11)
@@ -1243,7 +1261,7 @@ def pdf():
                     f.write(logo_data)
                 pdf.image(logo_path, x=logo_x, y=logo_y, w=28)
             except Exception as e:
-                print("Logo error:", e)
+                app.logger.warning(f"Logo error: {e}")
 
         pdf.set_xy(text_x, signature_y - 5)
         pdf.set_font("DejaVu", "B", 11)
@@ -1262,7 +1280,7 @@ def pdf():
                     f.write(sig_data)
                 pdf.image(signature_path, x=signature_x, y=signature_y, w=28)
             except Exception as e:
-                print("Signature error:", e)
+                app.logger.warning(f"Signature error: {e}")
 
         line_y = signature_y + 23
         pdf.line(signature_x, line_y, signature_x + 65, line_y)
@@ -1307,11 +1325,13 @@ def pdf():
         )
 
     except Exception as e:
-        print(traceback.format_exc())
-        return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
+        app.logger.exception(e)
+        return jsonify({
+            "error": "Internal Server Error"
+        }), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5001, debug=True)
+    app.run(host="0.0.0.0", port=5001, debug=False)
 
 
 

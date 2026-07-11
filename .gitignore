@@ -18,14 +18,19 @@ yarn-error.log*
 
 # -------------------- Environment variables --------------------
 .env
+.env.local
 .env.development
 .env.production
+.env.development.local
+.env.production.local
+
 frontend/.env.development
 frontend/.env.production
 
 # -------------------- PDFs y uploads --------------------
 backend/pdfs/
 backend/uploads/
+backend/logo_tmp/
 
 # -------------------- IDE / OS --------------------
 .vscode/

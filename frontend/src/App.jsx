@@ -342,6 +342,27 @@ function App() {
               </div>
             </div>
 
+            {/* 2 Betriebsmodell */}
+            <div className="card rounded-4 shadow-sm bg-white border-light">
+              <div className="card-body">
+                <BetriebsmodellSelector
+                  value={formData.betriebsmodell}
+                  onChange={updateBetriebsmodell}
+                />
+              </div>
+            </div>
+
+            {/* 3 Buchwert */}
+            <div className="card rounded-4 shadow-sm bg-white border-light">
+              <div className="card-body">
+                <Buchwert
+                  BASE_URL={BASE_URL}
+                  anlagenData={formData.anlagen}
+                  onResult={updateBuchwert}
+                />
+              </div>
+            </div>
+
             {/* 4 Ertragswert */}
             <div className="card rounded-4 shadow-sm bg-white border-light">
               <div className="card-body">
@@ -364,6 +385,22 @@ function App() {
               </div>
             </div>
 
+            {/* 5 PVGIS */}
+            <div className="card rounded-4 shadow-sm bg-white border-light">
+              <div className="card-body">
+                <PVGISForm
+                  BASE_URL={BASE_URL}
+                  pvgisData={formData.pvgis}
+                  onChange={updatePVGIS}
+                />
+              </div>
+            </div>
+
+          </div>
+
+          {/* RIGHT COLUMN */}
+          <div className="col-lg-6 d-flex flex-column gap-3">
+
             {/* 6 FINANZIELLE BEWERTUNG (directly under 4) */}
             <div className="card rounded-4 shadow-sm bg-white border-light">
               <div className="card-body">
@@ -383,43 +420,7 @@ function App() {
               </div>
             </div>
 
-          </div>
-
-          {/* RIGHT COLUMN */}
-          <div className="col-lg-6 d-flex flex-column gap-3">
-
-            {/* 2 Betriebsmodell */}
-            <div className="card rounded-4 shadow-sm bg-white border-light">
-              <div className="card-body">
-                <BetriebsmodellSelector
-                  value={formData.betriebsmodell}
-                  onChange={updateBetriebsmodell}
-                />
-              </div>
-            </div>
-
-            {/* 3 Buchwert */}
-            <div className="card rounded-4 shadow-sm bg-white border-light">
-              <div className="card-body">
-                <Buchwert
-                  BASE_URL={BASE_URL}
-                  anlagenData={formData.anlagen}
-                  onResult={updateBuchwert}
-                />
-              </div>
-            </div>
-
-            {/* 5 PVGIS */}
-            <div className="card rounded-4 shadow-sm bg-white border-light">
-              <div className="card-body">
-                <PVGISForm
-                  BASE_URL={BASE_URL}
-                  pvgisData={formData.pvgis}
-                  onChange={updatePVGIS}
-                />
-              </div>
-            </div>
-
+            
             {/* 7 RESTWERT (under PVGIS) */}
             <div className="card rounded-4 shadow-sm bg-white border-light">
               <div className="card-body">

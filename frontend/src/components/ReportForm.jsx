@@ -153,7 +153,7 @@ function ReportForm({
         }
       };
 
-      console.log("🔥 FINAL PDF DATA:", pdfData);
+      // console.log("🔥 FINAL PDF DATA:", pdfData);
 
       const res = await fetch("http://localhost:5001/pdf", {
         method: "POST",
@@ -363,11 +363,12 @@ function ReportForm({
           </button>
         </form>
       </div>
-
+      {/*
       <div className="card mb-4 p-3">
         <h5>DEBUG INPUT DATA</h5>
         <pre>{JSON.stringify({ ertragswertData, restwertData, pvgisData, finanzData }, null, 2)}</pre>
       </div>
+      */}
     </>
   );
 }
