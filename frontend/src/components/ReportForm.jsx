@@ -24,6 +24,9 @@ function ReportForm({
   const [kundeEmail, setKundeEmail] = useState("");
   const [documentId, setDocumentId] = useState("");
 
+  // URL del backend (desarrollo / producción)
+  const API_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleLogo = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -155,9 +158,11 @@ function ReportForm({
 
       // console.log("🔥 FINAL PDF DATA:", pdfData);
 
-      const res = await fetch("http://localhost:5001/pdf", {
+      const res = await fetch(`${API_URL}/pdf`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json"
+        },
         body: JSON.stringify(pdfData)
       });
 
@@ -173,9 +178,10 @@ function ReportForm({
 
       URL.revokeObjectURL(url);
 
+
     } catch (err) {
       console.error(err);
-      alert(`PDF Fehler: ${err.message}. Backend prüfen (localhost:5001)`);
+      alert(`PDF Fehler: ${err.message}. Backend prüfen.`);
     } finally {
       setLoading(false);
     }
