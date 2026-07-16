@@ -24,8 +24,13 @@ yarn-error.log*
 .env.development.local
 .env.production.local
 
+frontend/.env
 frontend/.env.development
 frontend/.env.production
+
+backend/.env
+backend/.env.development
+backend/.env.production
 
 # -------------------- PDFs y uploads --------------------
 backend/pdfs/
