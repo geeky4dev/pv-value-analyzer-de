@@ -173,7 +173,7 @@ function ReportForm({
 
       const a = document.createElement("a");
       a.href = url;
-      a.download = "PV-Wertgutachten_PRO.pdf";
+      a.download = "PV-Bewertungsbericht_PRO.pdf";
       a.click();
 
       URL.revokeObjectURL(url);

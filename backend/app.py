@@ -1233,17 +1233,23 @@ def pdf():
         logo = sach.get("logo")
         logo_path = None
 
+
         if logo:
             try:
                 if "," in logo:
                     logo = logo.split(",")[1]
+
                 logo_data = base64.b64decode(logo)
                 logo_path = os.path.join(TEMP_DIR, f"logo_{uuid.uuid4().hex}.png")
+
                 with open(logo_path, "wb") as f:
                     f.write(logo_data)
+
                 pdf.image(logo_path, x=logo_x, y=logo_y, w=28)
+
             except Exception as e:
                 print("Logo error:", e)
+
 
         pdf.set_xy(text_x, signature_y - 5)
         pdf.set_font("DejaVu", "B", 11)
@@ -1256,13 +1262,20 @@ def pdf():
             try:
                 if "," in signature:
                     signature = signature.split(",")[1]
+
                 sig_data = base64.b64decode(signature)
-                signature_path = os.path.join(TEMP_DIR, f"signature_{uuid.uuid4().hex}.png")
+                signature_path = os.path.join(
+                    TEMP_DIR,
+                    f"signature_{uuid.uuid4().hex}.png"
+                )
+
                 with open(signature_path, "wb") as f:
                     f.write(sig_data)
+
                 pdf.image(signature_path, x=signature_x, y=signature_y, w=28)
+
             except Exception as e:
-                print("Signature error:", e)
+                print("Signature error:", e)        
 
         line_y = signature_y + 23
         pdf.line(signature_x, line_y, signature_x + 65, line_y)
@@ -1302,12 +1315,12 @@ def pdf():
         return send_file(
             pdf_buffer,
             as_attachment=True,
-            download_name="PV-WERTGUTACHTEN.pdf",
+            download_name="PV-Bewertungsbericht_PRO.pdf",
             mimetype="application/pdf"
         )
 
     except Exception as e:
-        print(traceback.format_exc())
+        #print(traceback.format_exc())
         return jsonify({"error": str(e), "trace": traceback.format_exc()}), 500
 
 if __name__ == "__main__":
