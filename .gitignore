@@ -32,6 +32,7 @@ backend/.env
 backend/.env.development
 backend/.env.production
 
+
 # -------------------- PDFs y uploads --------------------
 backend/pdfs/
 backend/uploads/
@@ -50,3 +51,6 @@ Thumbs.db
 
 # -------------------- Archivos de desarrollo adicionales --------------------
 frontend/src/App-dev.jsx
+
+# ---------------- Development backups ----------------
+app-before-*.py
